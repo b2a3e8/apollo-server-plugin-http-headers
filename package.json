@@ -1,6 +1,6 @@
 {
   "name": "apollo-server-plugin-http-headers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Allows you to set HTTP Headers and Cookies easily in your apollo server resolvers.",
   "main": "src/index.js",
   "repository": {

@@ -1,52 +1,66 @@
 # apollo-server-plugin-http-headers
+
 Allows you to set HTTP Headers and Cookies easily in your resolvers. This is especially useful in apollo-server-lambda, because you don't have any other options there to set headers or cookies.
 
 The way it works is simple: you put an array for cookies and an array for headers in your context; you can then access them in your resolvers (and therefore add, alter or delete headers and cookies). Before your request is sent to the client this plugin loops through the arrays and adds every item to the HTTP response. The logic is very easy, actually the documentation is way longer than the source code.
 
 ## Installation
--   First, install the package:
-    `npm install apollo-server-plugin-http-headers`
--   Register the plugin and add setHeaders and setCookies to context:
-    ```javascript
-    const httpHeadersPlugin = require("apollo-server-plugin-http-headers");
-    
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        plugins: [httpHeadersPlugin],
-        context: {
+
+### Install the package
+
+`npm install apollo-server-plugin-http-headers`
+
+### Register plugin
+
+Import and register the plugin, then add `setHeaders` and `setCookies` to context:
+
+```javascript
+const httpHeadersPlugin = require("apollo-server-plugin-http-headers");
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [httpHeadersPlugin],
+    context: {
+        setCookies: new Array(),
+        setHeaders: new Array()
+    }
+});
+```
+
+Please note: The context argument varies depending on the specific integration (e.g. Express, Koa,  Lambda, etc.) being used. See the [official apollo-server documentation](https://www.apollographql.com/docs/apollo-server/api/apollo-server/) for more details.
+Example for the Lambda integration (apollo-server-lambda):
+
+```javascript
+const httpHeadersPlugin = require("apollo-server-plugin-http-headers");
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [httpHeadersPlugin],
+    context: ({ event, context }) => {
+        return {
+            event,
+            context,
             setCookies: new Array(),
             setHeaders: new Array()
-        }
-    });
-    ```
-    Please note: The context argument varies depending on the specific integration (e.g. Express, Koa,  Lambda, etc.) being used. See the [official apollo-server documentation](https://www.apollographql.com/docs/apollo-server/api/apollo-server/) for more details.
-    Example for the Lambda integration (apollo-server-lambda):
-    ```javascript
-    const httpHeadersPlugin = require("apollo-server-plugin-http-headers");
-    
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        plugins: [httpHeadersPlugin],
-        context: ({ event, context }) => {
-            return {
-                event,
-                context,
-                setCookies: new Array(),
-                setHeaders: new Array()
-            };
-        }
-    });
-    ```
+        };
+    }
+});
+```
 
 ## Usage
+
 ### Headers
+
 Set a header in a resolver:
+
 ```javascript
 context.setHeaders.push({ key: "headername", value: "headercontent" });
 ```
+
 Complete example:
+
 ```javascript
 const resolvers = {
     Query: {
@@ -60,7 +74,9 @@ const resolvers = {
 ```
 
 ### Cookies
+
 Set a cookie in a resolver:
+
 ```javascript
 context.setCookies.push({
     name: "cookieName",
@@ -76,12 +92,14 @@ context.setCookies.push({
     }
 });
 ```
+
 Complete example:
+
 ```javascript
 const resolvers = {
     Query: {
         hello: async (parent, args, context, info) => {
-        
+
             context.setCookies.push({
                 name: "cookieName",
                 value: "cookieContent",
@@ -95,14 +113,17 @@ const resolvers = {
                     secure: true
                 }
             });
-            
+
             return "Hello world!";
         }
     }
 };
 ```
+
 #### Cookie Options
+
 This package uses [jshttp/cookie](https://github.com/jshttp/cookie) for serializing cookies and you can use all the options they provide. Find an overview below or the complete documentation [here](https://github.com/jshttp/cookie#cookieserializename-value-options).
+
 option | description
 --- | ---
 domain | Specifies the value for the [`Domain` `Set-Cookie` attribute](https://tools.ietf.org/html/rfc6265#section-5.2.3). By default, no domain is set.

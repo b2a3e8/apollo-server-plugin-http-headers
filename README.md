@@ -134,3 +134,10 @@ maxAge | Specifies the number (in seconds) to be the value for the [`Max-Age` `S
 path | Specifies the value for the [`Path` `Set-Cookie` attribute](https://tools.ietf.org/html/rfc6265#section-5.2.4). By default, no path is set and the user agent computes a path according to [these algorithms](https://tools.ietf.org/html/rfc6265#section-5.1.4).
 sameSite | Specifies the boolean or string to be the value for the [`SameSite` `Set-Cookie` attribute](https://tools.ietf.org/html/draft-ietf-httpbis-rfc6265bis-03#section-4.1.2.7). Valid values: `true`, `false`, `'lax'`, `'none'` and `'strict'`.
 secure | Specifies the boolean value for the [`Secure` `Set-Cookie` attribute](https://tools.ietf.org/html/rfc6265#section-5.2.5).By default, the `Secure` attribute is not set.
+
+## Limitations
+
+### Only one cookie can be set per request
+
+There is at the moment no possility to set multiple cookies because apollo server does not support that. Find details and workaround inspiration [here](https://github.com/apollographql/apollo-server/issues/3040).
+If you add multiple items to setCookie I'll throw an exception at your face (-;

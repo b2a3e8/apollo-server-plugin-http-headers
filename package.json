@@ -1,6 +1,6 @@
 {
   "name": "apollo-server-plugin-http-headers",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Allows you to set HTTP Headers and Cookies easily in your apollo server resolvers.",
   "main": "src/index.js",
   "repository": {
@@ -11,15 +11,23 @@
     "url": "https://github.com/b2a3e8/apollo-server-plugin-http-headers/issues"
   },
   "homepage": "https://github.com/b2a3e8/apollo-server-plugin-http-headers",
-  "keywords": ["apollo", "apollo-server", "plugin", "header", "cookie", "graphql", "lambda"],
+  "keywords": [
+    "apollo",
+    "apollo-server",
+    "plugin",
+    "header",
+    "cookie",
+    "graphql",
+    "lambda"
+  ],
   "license": "MIT",
   "dependencies": {
-    "cookie": "^0.4.0"
+    "cookie": "*"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.9.0",
-    "eslint-plugin-prettier": "^3.1.2",
-    "prettier": "^1.19.1"
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*",
+    "prettier": "*"
   }
 }

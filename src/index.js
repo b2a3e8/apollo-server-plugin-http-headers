@@ -21,14 +21,12 @@ module.exports = {
         // set headers
         setHeaders.forEach(({ key, value }) => {
           requestContext.response.http.headers.append(key, value);
-          console.debug("set header " + key + ": " + value);
         });
 
         // set cookies
         setCookies.forEach(({ name, value, options }) => {
           var cookieString = cookie.serialize(name, value, options);
           requestContext.response.http.headers.set("Set-Cookie", cookieString);
-          console.debug("set header Set-Cookie: " + cookieString);
         });
 
         return requestContext;

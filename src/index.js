@@ -4,7 +4,7 @@ module.exports = {
   requestDidStart() {
     return {
       willSendResponse(requestContext) {
-        const { setHeaders = [], setCookies = [] } = requestContext.context;
+        const { setHeaders = [], setCookies = [] } = requestContext.contextValue;
 
         // inform user about wrong usage
         if (!Array.isArray(requestContext.context.setHeaders)) {
